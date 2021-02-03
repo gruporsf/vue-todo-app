@@ -1,5 +1,5 @@
 <template>
-  <h1>Todo Item</h1>
+    <p>Novo Item</p>
 
     <InputText v-model="description" />
 
@@ -16,14 +16,22 @@ export default {
     return {
         description: '',
     }
-  },  
+  },
+  props: {
+    todo: Object
+  },
+  created() {
+    if(this.todo){
+      this.description = this.todo.description;
+    }
+  },
   methods: {
     cancel() {
       this.$emit("cancel");
     },
     saveTodo() {
         //Emite um evento para o componente pai, App.vue, passando o valor da variavel description
-        this.$emit("saveTodo", { description: this.description });
+        this.$emit("saveTodo", { ...this.todo, description: this.description });
     },
   },
 };
